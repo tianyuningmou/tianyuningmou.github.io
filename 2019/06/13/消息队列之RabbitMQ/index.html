@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="####RabbitMQ生产者 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364package com.tianyuningmou.MQDemo;import com.rabbitmq.client.AMQP;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="消息队列之RabbitMQ">
+<meta property="og:url" content="https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/index.html">
+<meta property="og:site_name" content="天宇凝眸">
+<meta property="og:description" content="####RabbitMQ生产者 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364package com.tianyuningmou.MQDemo;import com.rabbitmq.client.AMQP;">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-13T09:46:42.563Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="消息队列之RabbitMQ">
+<meta name="twitter:description" content="####RabbitMQ生产者 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364package com.tianyuningmou.MQDemo;import com.rabbitmq.client.AMQP;">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>消息队列之RabbitMQ</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/tianyuningmou">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$("#i-top").toggle();" onmouseout="$("#i-top").toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$("#i-share").toggle();" onmouseout="$("#i-share").toggle();" onclick="$("#share").toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&text=消息队列之RabbitMQ"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&is_video=false&description=消息队列之RabbitMQ"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=消息队列之RabbitMQ&body=Check out this article: https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&name=消息队列之RabbitMQ&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#RabbitMQ消费者"><span class="toc-number">1.</span> <span class="toc-text">RabbitMQ消费者</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        消息队列之RabbitMQ
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">天宇凝眸</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-06-13T09:36:45.000Z" itemprop="datePublished">2019-06-13</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>####RabbitMQ生产者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">package com.tianyuningmou.MQDemo;</span><br><span class="line"></span><br><span class="line">import com.rabbitmq.client.AMQP;</span><br><span class="line">import com.rabbitmq.client.Channel;</span><br><span class="line">import com.rabbitmq.client.Connection;</span><br><span class="line">import com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.net.URISyntaxException;</span><br><span class="line">import java.security.KeyManagementException;</span><br><span class="line">import java.security.NoSuchAlgorithmException;</span><br><span class="line">import java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line">public class RabbitProducer &#123;</span><br><span class="line">    private static final String EXCHANGE_NAME = &quot;exchange_demo&quot;;</span><br><span class="line">    private static final String ROUTING_KEY = &quot;routingkey_demo&quot;;</span><br><span class="line">    private static final String QUEUE_NAME = &quot;queue_demo&quot;;</span><br><span class="line">    private static final String IP_ADDRESS = &quot;127.0.0.1&quot;;</span><br><span class="line">    private static final int PORT = 5672;</span><br><span class="line">    private static final String USER_NAME = &quot;guest&quot;;</span><br><span class="line">    private static final String PASSWORD = &quot;guest&quot;;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws IOException, TimeoutException, URISyntaxException,</span><br><span class="line">            NoSuchAlgorithmException, KeyManagementException &#123;</span><br><span class="line">        ConnectionFactory factory = new ConnectionFactory();</span><br><span class="line">        // 第一种连接方式</span><br><span class="line">        factory.setHost(IP_ADDRESS);</span><br><span class="line">        factory.setPort(PORT);</span><br><span class="line">        factory.setUsername(USER_NAME);</span><br><span class="line">        factory.setPassword(PASSWORD);</span><br><span class="line">        // 第二种连接方式</span><br><span class="line">//        factory.setUri(&quot;amqp://guest:guest@127.0.0.1:5672&quot;);</span><br><span class="line"></span><br><span class="line">        // 创建连接</span><br><span class="line">        Connection connection = factory.newConnection();</span><br><span class="line">        // 创建信道</span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        // 创建一个type=&quot;direct&quot;、持久化的、非自动删除的交换器</span><br><span class="line">        channel.exchangeDeclare(EXCHANGE_NAME, &quot;direct&quot;, true, false, null);</span><br><span class="line">        // 创建一个持久化、非排他的、非自动删除的队列</span><br><span class="line">        // 声明一个死信exchange</span><br><span class="line">//        channel.exchangeDeclare(&quot;dlx-exchange&quot;, &quot;direct&quot;);</span><br><span class="line">//        HashMap&lt;String, Object&gt; arg_s = new HashMap&lt;String, Object&gt;();</span><br><span class="line">//        arg_s.put(&quot;x-dead-letter-exchange&quot;, &quot;dlx-exchange&quot;);</span><br><span class="line">        // 声明一个队列</span><br><span class="line">        channel.queueDeclare(QUEUE_NAME, true, false, false, null);</span><br><span class="line">        channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, ROUTING_KEY);</span><br><span class="line">        String message = &quot;Hello World&quot;;</span><br><span class="line">        // 开启事务确认机制</span><br><span class="line">        channel.txSelect();</span><br><span class="line">//        channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());</span><br><span class="line">        channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY,</span><br><span class="line">                new AMQP.BasicProperties.Builder()</span><br><span class="line">                        .contentType(&quot;text/plain&quot;)</span><br><span class="line">                        .deliveryMode(2)</span><br><span class="line">                        .priority(1)</span><br><span class="line">                        .expiration(&quot;6000&quot;)</span><br><span class="line">                        .build(),</span><br><span class="line">                message.getBytes());</span><br><span class="line">        channel.txCommit();</span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="RabbitMQ消费者"><a href="#RabbitMQ消费者" class="headerlink" title="RabbitMQ消费者"></a>RabbitMQ消费者</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">package com.tianyuningmou.MQDemo;</span><br><span class="line"></span><br><span class="line">import com.rabbitmq.client.*;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.util.concurrent.TimeUnit;</span><br><span class="line">import java.util.concurrent.TimeoutException;</span><br><span class="line"></span><br><span class="line">public class RabbitConsumer &#123;</span><br><span class="line">    private static final String QUEUE_NAME = &quot;queue_demo&quot;;</span><br><span class="line">    private static final String IP_ADDRESS = &quot;127.0.0.1&quot;;</span><br><span class="line">    private static final int PORT = 5672;</span><br><span class="line">    private static final String USER_NAME = &quot;guest&quot;;</span><br><span class="line">    private static final String PASSWORD = &quot;guest&quot;;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws IOException, TimeoutException, InterruptedException &#123;</span><br><span class="line">        Address[] addresses = new Address[] &#123;</span><br><span class="line">                new Address(IP_ADDRESS, PORT)</span><br><span class="line">        &#125;;</span><br><span class="line">        ConnectionFactory factory = new ConnectionFactory();</span><br><span class="line">        factory.setUsername(USER_NAME);</span><br><span class="line">        factory.setPassword(PASSWORD);</span><br><span class="line">        // 创建连接</span><br><span class="line">        Connection connection = factory.newConnection(addresses);</span><br><span class="line">        // 创建信道</span><br><span class="line">        final Channel channel = connection.createChannel();</span><br><span class="line">        channel.basicQos(64);</span><br><span class="line">//        推模式</span><br><span class="line">//        Consumer consumer = new DefaultConsumer(channel) &#123;</span><br><span class="line">//            @Override</span><br><span class="line">//            public void handleDelivery(String consumerTag,</span><br><span class="line">//                                       Envelope envelope,</span><br><span class="line">//                                       AMQP.BasicProperties properties,</span><br><span class="line">//                                       byte[] body) throws IOException &#123;</span><br><span class="line">//                System.out.println(&quot;recv message:&quot; + new String(body));</span><br><span class="line">//                try &#123;</span><br><span class="line">//                    TimeUnit.SECONDS.sleep(1);</span><br><span class="line">//                &#125; catch (InterruptedException e) &#123;</span><br><span class="line">//                    e.printStackTrace();</span><br><span class="line">//                &#125;</span><br><span class="line">//                channel.basicAck(envelope.getDeliveryTag(), false);</span><br><span class="line">//            &#125;</span><br><span class="line">//        &#125;;</span><br><span class="line">//        channel.basicConsume(QUEUE_NAME, consumer);</span><br><span class="line"></span><br><span class="line">//        拉模式</span><br><span class="line">        GetResponse response = channel.basicGet(QUEUE_NAME, false);</span><br><span class="line">        System.out.println(new String(response.getBody()));</span><br><span class="line">        TimeUnit.SECONDS.sleep(3);</span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/tianyuningmou">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#RabbitMQ消费者"><span class="toc-number">1.</span> <span class="toc-text">RabbitMQ消费者</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&text=消息队列之RabbitMQ"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&is_video=false&description=消息队列之RabbitMQ"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=消息队列之RabbitMQ&body=Check out this article: https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&title=消息队列之RabbitMQ"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://tianyuningmou.github.io/2019/06/13/消息队列之RabbitMQ/&name=消息队列之RabbitMQ&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$("#toc-footer").toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$("#share-footer").toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$("#nav-footer").toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 tianyuningmou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/tianyuningmou">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
